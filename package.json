@@ -1,0 +1,23 @@
+{
+  "name": "CST8334---Software-Dev.-Project-",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/char-e/CST8334---Software-Dev.-Project-.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/char-e/CST8334---Software-Dev.-Project-/issues"
+  },
+  "homepage": "https://github.com/char-e/CST8334---Software-Dev.-Project-#readme",
+  "devDependencies": {
+    "sass": "^1.32.13"
+  }
+}
