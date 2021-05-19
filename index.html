@@ -1,10 +1,88 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="./style.scss" />
+    <title>Solitaire</title>
   </head>
   <body>
-    <h1>Hello, World!</h1>
+    <main>
+      <div class="row">
+        <nav>
+          <span>Score: </span>
+          <span class="score">0</span>
+          <button class="deal">Deal</button>
+        </nav>
+      </div>
+      <div class="card-table">
+        <div class="row">
+          <div class="first-row">
+            <div class="pile stock-pile"></div>
+            <div class="pile talon-pile"></div>
+            <div class="pile placeholder-pile"></div>
+            <div class="pile foundations-pile heart"></div>
+            <div class="pile foundations-pile diamond"></div>
+            <div class="pile foundations-pile spade"></div>
+            <div class="pile foundations-pile club"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="second-row">
+            <div class="pile tableau-pile">
+              <div class="card" data-rank="K" data-suit="club"></div>
+              <div class="card up" data-rank="Q" data-suit="club"></div>
+            </div>
+            <div class="pile tableau-pile">
+              <div class="card"></div>
+              <div class="card" data-rank="" data-suit="club"></div>
+              <div class="card up" data-rank="A" data-suit="club"></div>
+            </div>
+            <div class="pile tableau-pile">
+              <div class="card"></div>
+              <div class="card"></div>
+              <div class="card"></div>
+              <div class="card up" data-rank="2" data-suit="spade"></div>
+            </div>
+            <div class="pile tableau-pile">
+              <div class="card"></div>
+              <div class="card"></div>
+              <div class="card"></div>
+              <div class="card"></div>
+              <div class="card up" data-rank="J" data-suit="heart"></div>
+            </div>
+            <div class="pile tableau-pile">
+              <div class="card"></div>
+              <div class="card"></div>
+              <div class="card"></div>
+              <div class="card"></div>
+              <div class="card"></div>
+              <div class="card up" data-rank="3" data-suit="diamond"></div>
+            </div>
+            <div class="pile tableau-pile">
+              <div class="card"></div>
+              <div class="card"></div>
+              <div class="card"></div>
+              <div class="card"></div>
+              <div class="card"></div>
+              <div class="card"></div>
+              <div class="card up" data-rank="A" data-suit="diamond"></div>
+            </div>
+            <div class="pile tableau-pile">
+              <div class="card"></div>
+              <div class="card"></div>
+              <div class="card"></div>
+              <div class="card"></div>
+              <div class="card"></div>
+              <div class="card"></div>
+              <div class="card" data-rank="9" data-suit="club"></div>
+              <div class="card up" data-rank="8" data-suit="club"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
     <script src="./index.js"></script>
   </body>
 </html>
