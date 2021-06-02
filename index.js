@@ -5,6 +5,14 @@ var suits = ["heart", "diamond", "spade", "club"];
 var ranks = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
 var isSelected = false;
 
+d = createDeck();
+//console.log(d);
+shuffledDeck = shuffle(d);
+//console.log(shuffledDeck);
+// document.getElementById('dealbtn').addEventListener('click', createDeck)
+dealCards(d);
+
+
 function createDeck() {
   var deck = new Array();
   for (var s = 0; s < suits.length; s++) {
@@ -32,12 +40,6 @@ function shuffle(deck) {
   }
   return deck;
 }
-
-d = createDeck();
-//console.log(d);
-shuffledDeck = shuffle(d);
-//console.log(shuffledDeck);
-// document.getElementById('dealbtn').addEventListener('click', createDeck)
 
 // function to deal cards
 function dealCards(stock) {
@@ -73,8 +75,6 @@ function faceUp() {
   }
 }
 
-dealCards(d);
-
 // add a click event listener to the 'deal' btn
 var btn = document
   .getElementById("dealbtn")
@@ -100,13 +100,13 @@ function attachEventListeners() {
   var tableauPiles = document.querySelectorAll(".tableau-pile");
   Array.prototype.forEach.call(tableauPiles, function (pile) {
     pile.addEventListener("click", function () {
-      moveCards(pile);
+      moveCardToTableau(pile);
     });
   });
 }
 
-// function to move cards
-function moveCards(pile) {
+// function to move cards to the tableau
+function moveCardToTableau(pile) {
   if (!isSelected) {
     var card = pile.lastChild;
     if (card) {
@@ -115,19 +115,81 @@ function moveCards(pile) {
     }
   } else {
     var cardSelected = document.querySelector(".card.selected");
+    var cardDestination = pile.lastChild;
     // find parent pile of the first selected card
     var parentPile = cardSelected.closest(".pile");
-    // remove cardSelected from the old parent pile
-    parentPile.removeChild(cardSelected);
-    // open the last card left in that pile (if any)
-    if(parentPile.lastChild) {
-      parentPile.lastChild.classList.add("up");
+
+    if( validTableauMove(cardSelected,cardDestination) ) {
+      // remove cardSelected from the old parent pile
+      parentPile.removeChild(cardSelected);
+      // open the last card left in that pile (if any)
+      if(parentPile.lastChild) {
+        parentPile.lastChild.classList.add("up");
+      }
+      // add cardSelected to the end of the new pile
+      pile.appendChild(cardSelected);
     }
-    // add cardSelected to the end of the new pile
-    pile.appendChild(cardSelected);
+    else { // invalid move
+      // TODO: possible error feedback (red flash/sound, etc)
+    }
+    
+    // deselect card
     cardSelected.classList.remove("selected");
     isSelected = false;
   }
+}
+
+// function to check if a move to the tableau is allowed
+function validTableauMove(cardSelected, cardDestination) {
+  // if destination is empty, selected card just needs to be a king
+  if( !cardDestination ) {
+    // console.log("Empty destination, must be king");
+    return cardSelected.getAttribute("data-rank") == ranks[12];
+  }
+  // console.log("selected: " + cardSelected.getAttribute("data-rank") + "\ndestination:" + cardDestination.getAttribute("data-rank"));
+  // check for descending order
+  if( ranks.indexOf(cardDestination.getAttribute("data-rank")) != ranks.indexOf(cardSelected.getAttribute("data-rank")) + 1 ) {
+    // console.log("Bad order");
+    return false;
+  }
+  // check for alternating colour
+  // if both are red, return false
+  if ( (cardSelected.getAttribute("data-suit") == suits[0] || cardSelected.getAttribute("data-suit") == suits[1]) &&
+    (cardDestination.getAttribute("data-suit") == suits[0] || cardDestination.getAttribute("data-suit") == suits[1])) {
+    // console.log("Bad suit: both cards red");
+    return false;
+  }
+  // if both are black, return false
+  if ( (cardSelected.getAttribute("data-suit") == suits[2] || cardSelected.getAttribute("data-suit") == suits[3]) &&
+    (cardDestination.getAttribute("data-suit") == suits[2] || cardDestination.getAttribute("data-suit") == suits[3])) {
+    // console.log("Bad suit: both cards black");
+    return false;
+  }
+  // all checks passed
+  // console.log("Valid move");
+  return true;
+}
+
+// function to check if a move to the foundation is allowed
+function validFoundationMove(cardSelected,cardDestination) {
+  if( !cardDestination ) {
+    // console.log("Empty destination, must be ace");
+    // WARNING: Table slots have suits! CHECK TO ENSURE CARD GOES TO CORRECT SLOT!
+    return cardSelected.getAttribute("data-rank") == ranks[0];
+  }
+  // check for ascending order
+  if( ranks.indexOf(cardDestination.getAttribute("data-rank")) != ranks.indexOf(cardSelected.getAttribute("data-rank")) - 1 ) {
+    // console.log("Bad order");
+    return false;
+  }
+  // check for same colour
+  if ( cardSelected.getAttribute("data-suit") !=  cardDestination.getAttribute("data-suit")) {
+    // console.log("Suits don't match");
+    return false;
+  }
+  // all checks passed
+  // console.log("Valid move");
+  return true;
 }
 
 window.addEventListener("DOMContentLoaded", (event) => {
