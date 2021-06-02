@@ -87,18 +87,18 @@ var btn = document
 
 // clear stock and tableau piles
 function clearPiles() {
-  var tableauPiles = document.querySelectorAll(".tableau-pile");
+  var piles = document.querySelectorAll(".tableau-pile");
   var stockPile = document.querySelector(".stock-pile");
   stockPile.innerHTML = null;
-  Array.prototype.forEach.call(tableauPiles, function (pile) {
+  Array.prototype.forEach.call(piles, function (pile) {
     pile.innerHTML = null;
   });
 }
 
 // add a click event listener to the tableau piles
 function attachEventListeners() {
-  var tableauPiles = document.querySelectorAll(".tableau-pile");
-  Array.prototype.forEach.call(tableauPiles, function (pile) {
+  var piles = document.querySelectorAll(".tableau-pile,.foundations-pile");
+  Array.prototype.forEach.call(piles, function (pile) {
     pile.addEventListener("click", function () {
       moveCardToTableau(pile);
     });
