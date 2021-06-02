@@ -85,12 +85,16 @@ var btn = document
     dealCards(d);
   });
 
-// clear stock and tableau piles
+// clear foundations, stock and tableau piles
 function clearPiles() {
+  var foundations = document.querySelectorAll(".foundations-pile");
   var piles = document.querySelectorAll(".tableau-pile");
   var stockPile = document.querySelector(".stock-pile");
   stockPile.innerHTML = null;
   Array.prototype.forEach.call(piles, function (pile) {
+    pile.innerHTML = null;
+  });
+  Array.prototype.forEach.call(foundations, function (pile) {
     pile.innerHTML = null;
   });
 }
@@ -108,10 +112,13 @@ function attachEventListeners() {
 // function to move cards to the tableau
 function moveCardToTableau(pile) {
   if (!isSelected) {
-    var card = pile.lastChild;
-    if (card) {
-      card.classList.add("selected");
-      isSelected = true;
+    // can only select cards from the tableau and talon
+    if(pile.classList.contains("tableau-pile") || pile.classList.contains("talon-pile")) {
+      var card = pile.lastChild;
+      if (card) {
+        card.classList.add("selected");
+        isSelected = true;
+      }
     }
   } else {
     var cardSelected = document.querySelector(".card.selected");
@@ -119,7 +126,21 @@ function moveCardToTableau(pile) {
     // find parent pile of the first selected card
     var parentPile = cardSelected.closest(".pile");
 
-    if( validTableauMove(cardSelected,cardDestination) ) {
+    var validMove = false;
+
+    if(pile.classList.contains("tableau-pile")) {
+      validMove = validTableauMove(cardSelected,cardDestination);
+    }
+    else if(pile.classList.contains("foundations-pile")) {
+      // Check foundation pile of the correct suit, despite which foundation pile is clicked
+      pile = document.querySelector(".pile.foundations-pile." + cardSelected.getAttribute("data-suit"));
+      cardDestination = pile.lastChild;
+      validMove = validFoundationMove(cardSelected,cardDestination)
+    }
+    else { // invalid move
+      // TODO: possible error feedback (red flash/sound, etc)
+    }
+    if (validMove) {
       // remove cardSelected from the old parent pile
       parentPile.removeChild(cardSelected);
       // open the last card left in that pile (if any)
@@ -128,9 +149,6 @@ function moveCardToTableau(pile) {
       }
       // add cardSelected to the end of the new pile
       pile.appendChild(cardSelected);
-    }
-    else { // invalid move
-      // TODO: possible error feedback (red flash/sound, etc)
     }
     
     // deselect card
@@ -174,17 +192,11 @@ function validTableauMove(cardSelected, cardDestination) {
 function validFoundationMove(cardSelected,cardDestination) {
   if( !cardDestination ) {
     // console.log("Empty destination, must be ace");
-    // WARNING: Table slots have suits! CHECK TO ENSURE CARD GOES TO CORRECT SLOT!
     return cardSelected.getAttribute("data-rank") == ranks[0];
   }
   // check for ascending order
   if( ranks.indexOf(cardDestination.getAttribute("data-rank")) != ranks.indexOf(cardSelected.getAttribute("data-rank")) - 1 ) {
     // console.log("Bad order");
-    return false;
-  }
-  // check for same colour
-  if ( cardSelected.getAttribute("data-suit") !=  cardDestination.getAttribute("data-suit")) {
-    // console.log("Suits don't match");
     return false;
   }
   // all checks passed
