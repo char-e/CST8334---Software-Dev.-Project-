@@ -3,6 +3,7 @@
 
 var suits = ["heart", "diamond", "spade", "club"];
 var ranks = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+var isSelected = false;
 
 function createDeck() {
   var deck = new Array();
@@ -89,7 +90,46 @@ function clearPiles() {
   var tableauPiles = document.querySelectorAll(".tableau-pile");
   var stockPile = document.querySelector(".stock-pile");
   stockPile.innerHTML = null;
-  Array.prototype.forEach.call(tableauPiles, function(pile) {
+  Array.prototype.forEach.call(tableauPiles, function (pile) {
     pile.innerHTML = null;
   });
 }
+
+// add a click event listener to the tableau piles
+function attachEventListeners() {
+  var tableauPiles = document.querySelectorAll(".tableau-pile");
+  Array.prototype.forEach.call(tableauPiles, function (pile) {
+    pile.addEventListener("click", function () {
+      moveCards(pile);
+    });
+  });
+}
+
+// function to move cards
+function moveCards(pile) {
+  if (!isSelected) {
+    var card = pile.lastChild;
+    if (card) {
+      card.classList.add("selected");
+      isSelected = true;
+    }
+  } else {
+    var cardSelected = document.querySelector(".card.selected");
+    // find parent pile of the first selected card
+    var parentPile = cardSelected.closest(".pile");
+    // remove cardSelected from the old parent pile
+    parentPile.removeChild(cardSelected);
+    // open the last card left in that pile (if any)
+    if(parentPile.lastChild) {
+      parentPile.lastChild.classList.add("up");
+    }
+    // add cardSelected to the end of the new pile
+    pile.appendChild(cardSelected);
+    cardSelected.classList.remove("selected");
+    isSelected = false;
+  }
+}
+
+window.addEventListener("DOMContentLoaded", (event) => {
+  attachEventListeners();
+});

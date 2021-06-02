@@ -7,6 +7,10 @@
   border-radius: 5px;
   //box-shadow: 0 0 5px rgb(0 0 0 / 25%), 0 2px 1px rgb(0 0 0 / 50%);
 
+  &.selected {
+    box-shadow: 0 0 5px rgb(255 255 0 / 90%), 0 2px 1px rgb(255 255 0 / 90%);
+  }
+
   &.up {
     /* Kings */
     &[data-rank="K"][data-suit="club"] {
