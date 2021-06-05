@@ -237,50 +237,50 @@
 
 .tableau-pile .card {
   &:nth-of-type(2) {
-    top: 12px;
+    top: 20px;
   }
 
   &:nth-of-type(3) {
-    top: 24px;
+    top: 40px;
   }
 
   &:nth-of-type(4) {
-    top: 36px;
-  }
-
-  &:nth-of-type(5) {
-    top: 48px;
-  }
-
-  &:nth-of-type(6) {
     top: 60px;
   }
 
+  &:nth-of-type(5) {
+    top: 80px;
+  }
+
+  &:nth-of-type(6) {
+    top: 100px;
+  }
+
   &:nth-of-type(7) {
-    top: 72px;
-  }
-
-  &:nth-of-type(8) {
-    top: 84px;
-  }
-
-  &:nth-of-type(9) {
-    top: 96px;
-  }
-
-  &:nth-of-type(10) {
-    top: 108px;
-  }
-
-  &:nth-of-type(11) {
     top: 120px;
   }
 
+  &:nth-of-type(8) {
+    top: 140px;
+  }
+
+  &:nth-of-type(9) {
+    top: 160px;
+  }
+
+  &:nth-of-type(10) {
+    top: 180px;
+  }
+
+  &:nth-of-type(11) {
+    top: 200px;
+  }
+
   &:nth-of-type(12) {
-    top: 132px;
+    top: 220px;
   }
 
   &:nth-of-type(13) {
-    top: 144px;
+    top: 240px;
   }
 }
