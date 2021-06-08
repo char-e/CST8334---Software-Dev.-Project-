@@ -78,6 +78,7 @@ function faceUp() {
 var btn = document
   .getElementById("dealbtn")
   .addEventListener("click", function () {
+    isSelected = false;
     clearPiles();
     d = createDeck();
     shuffledDeck = shuffle(d);
@@ -131,7 +132,7 @@ function moveCardToTableau(pile, event) {
     var cardsSelected = document.querySelectorAll(".card.selected");
     var cardDestination = pile.lastChild;
     // find parent pile of the first selected card
-    var parentPile = cardsSelected[0].closest(".pile");
+    var parentPile = cardsSelected[0].closest(".tableau-pile");
 
     var validMove = false;
 
