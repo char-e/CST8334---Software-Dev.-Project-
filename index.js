@@ -103,7 +103,7 @@ function clearPiles() {
 function attachEventListeners() {
   var piles = document.querySelectorAll(".tableau-pile,.foundations-pile");
   Array.prototype.forEach.call(piles, function (pile) {
-    pile.addEventListener("click", function () {
+    pile.addEventListener("click", function (event) {
       moveCardToTableau(pile, event);
     });
   });
@@ -120,10 +120,9 @@ function moveCardToTableau(pile, event) {
       var card = event.target;
       if (card && card.classList.contains("up")) {
         card.classList.add("selected");
-        if (findSiblings(card) !== 0) {
-          for (i = 0; i < findSiblings(card).length; i++) {
-            findSiblings(card)[i].classList.add("selected");
-          }
+        var cardSiblings = findSiblings(card);
+        for (i = 0; i < cardSiblings.length; i++) {
+          cardSiblings[i].classList.add("selected");
         }
         isSelected = true;
       }
