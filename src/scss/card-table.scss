@@ -36,40 +36,43 @@
 .heart::before {
   position: absolute;
   top: 45%;
-  right:25%;
+  right: 25%;
   transform: translate(0, -50%);
   content: "\2665";
   font-size: 100px;
   color: #333;
+  opacity: 0.6;
 }
 
 .diamond::before {
   position: absolute;
   top: 45%;
-  right:25%;
+  right: 25%;
   transform: translate(0, -50%);
   content: "\2666";
   font-size: 100px;
   color: #333;
+  opacity: 0.6;
 }
 
 .spade::before {
   position: absolute;
   top: 45%;
-  right:25%;
+  right: 25%;
   transform: translate(0, -50%);
   content: "\2660";
   font-size: 100px;
   color: #333;
+  opacity: 0.6;
 }
 
 .club::before {
   position: absolute;
   top: 45%;
-  right:25%;
+  right: 25%;
   transform: translate(0, -50%);
   content: "\2663";
   font-size: 100px;
   color: #333;
+  opacity: 0.6;
 }
-
