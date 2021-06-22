@@ -28,57 +28,61 @@ nav {
 }
 
 .row {
-  width: 100%;
-  max-width: 1190px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 0;
-  margin-bottom: 0;
+  margin: 0 15px;
+
+  @media #{$md-breakpoint} {
+    margin: 0 45px;
+  }
+
+  @media #{$lg-breakpoint} {
+    width: 100%;
+    max-width: 1190px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 }
 
 .header {
-  width: 100%;
-  max-width: 1190px;
-  padding-top: 20px;
   display: flex;
-  align-items: center;
-}
+  margin-top: 15px;
 
-.header img {
-  width: 65px;
-  height: 65px;
-  padding-left: 35px;
-  padding-right: 10px;
-}
-
-.header a {
-  margin-left: auto;
-  align-self: center;
-  color: #fff;
-}
-
-@media screen and (max-width: 768px) {
-  .header h1 {
-    font-size: 22px;
+  @media #{$md-breakpoint} {
+    margin-top: 30px;
   }
 
-  .header img {
+  img {
     width: 50px;
     height: 50px;
-    padding-left: 10px;
+    margin-left: 15px;
+
+    @media #{$sm-breakpoint} {
+      width: 65px;
+      height: 65px;
+    }
+
+    @media #{$md-breakpoint} {
+      margin-left: 45px;
+    }
   }
 
-  .header a {
-    padding-right: 20px;
-  }
-}
+  h1 {
+    font-size: 22px;
+    margin: 14px 0 14px 10px;
 
-@media screen and (max-width: 1200px) {
-  .header img {
-    padding-left: 10px;
+    @media #{$sm-breakpoint} {
+      font-size: 32px;
+    }
   }
 
-  .header a {
-    padding-right: 10px;
+  a {
+    align-self: center;
+    margin: 0 15px 0 auto;
+    color: #fff;
+
+    @media #{$md-breakpoint} {
+      margin-right: 45px;
+    }
   }
 }
