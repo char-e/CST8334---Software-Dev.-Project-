@@ -109,15 +109,165 @@ function attachEventListeners() {
   });
 }
 
+
+/////////
+/**
+ *   STOCK PILE MOVES  
+ */
+
+ function attachEventListenersToStock() {
+  var piles = document.querySelectorAll(".stock-pile");
+  Array.prototype.forEach.call(piles, function (pile) {
+    pile.addEventListener("click", function (event) {
+      getCardFromStock(pile, event);
+    });
+  });
+}
+attachEventListenersToStock();
+
+function getCardFromStock(pile, event){
+  let stockPile =  document.querySelector('.stock-pile');
+  let talonPile =  document.querySelector('.talon-pile');
+  let stockPileCard =stockPile.lastChild;
+  // console.log(pile, event);
+  if(stockPileCard){ //stockPile is not empty
+    stockPile.removeChild(stockPileCard);
+    talonPile.appendChild(stockPileCard);
+    stockPileCard.classList.add("up");
+  }else{
+    //make a button to get every card from talon pile to stack 
+    while (talonPile.hasChildNodes()) { 
+      talonPile.lastChild.classList.remove("up");
+      stockPile.appendChild(talonPile.removeChild(talonPile.lastChild));
+    }
+  }
+} 
+
+/**
+ *  END STOCK PILE MOVES  
+***/
+
+
+/**
+ *   TALON PILE MOVES  
+ */
+
+ function attachEventListenersToTalon() {
+  var piles = document.querySelectorAll(".talon-pile");
+  Array.prototype.forEach.call(piles, function (pile) {
+    pile.addEventListener("click", function (event) {
+      moveCardToTableau(pile, event);
+    });
+  });
+}
+
+attachEventListenersToTalon();
+
+// function moveCardToTalon(pile, event){
+//   console.log('Talon:: pile', pile)
+// }
+
+
+/**
+ *   END TALON PILE MOVES  
+ */
+
+
+// function for the double click to move cards to foundation pile
+// from tablew or talon  
+let clickCount=0;
+let singleClickTimer;
+function isDoubleClick() {
+  clickCount++;
+  if (clickCount === 1) {
+      singleClickTimer = setTimeout(function() {
+      clickCount = 0;
+      }, 500);
+      return false;
+  } else if (clickCount === 2) {
+      clearTimeout(singleClickTimer);
+      clickCount = 0;
+      return true;
+  }
+  else{
+    return false;
+  }
+}
+
+function attachDoubleClickEventListeners() {
+  var piles = document.querySelectorAll(".tableau-pile,.talon-pile");
+  Array.prototype.forEach.call(piles, function (pile) {
+    pile.addEventListener("click", function (event) {
+      magicMove(pile, event, isDoubleClick()); 
+    });
+  });
+}
+attachDoubleClickEventListeners();
+
+
+// Doubble click pt.2 AKA magicMove
+function magicMove(pile, event,isDoubleClicked){
+  if(isDoubleClicked){
+    let cardSelected =  event.target;
+    let suit = cardSelected.getAttribute("data-suit");
+    
+    foundationsPile =  document.querySelector( `.foundations-pile.${suit}`);
+    if(foundationsPile == null) return;
+    if(!foundationsPile.hasChildNodes()){ //dont have child
+      console.log(event.target,isDoubleClicked)
+      if(cardSelected.getAttribute("data-rank") == ranks[0]){
+        moveTableauToFoundation(cardSelected, foundationsPile);
+      }
+    }else{
+      let isValid = validFoundationMove(cardSelected, foundationsPile.lastChild); 
+      if(isValid){
+        moveTableauToFoundation(cardSelected, foundationsPile)
+      }
+    }
+  }
+}
+
+
+function moveTableauToFoundation(cardSelected, destPile){
+  parentPile = cardSelected.closest(".tableau-pile,.talon-pile");
+  console.log("ParentPile",parentPile);
+  parentPile.removeChild(cardSelected);
+  
+  if (parentPile.lastChild) {
+    parentPile.lastChild.classList.add("up");
+  }
+  destPile.appendChild(cardSelected);
+}
+
+
+// add a click event listener to the tableau piles
+function attachEventListeners() {
+  var piles = document.querySelectorAll(".tableau-pile,.foundations-pile");
+  Array.prototype.forEach.call(piles, function (pile) {
+    pile.addEventListener("click", function (event) {
+      moveCardToTableau(pile, event);
+    });
+  });
+}
+
+/////////
+
+
+
+
+
+
 // function to move cards to the tableau
-function moveCardToTableau(pile, event) {
-  if (!isSelected) {
+//Main variables pile (current or destination  pile which is clicked), parentPile(pile of card having last child class = selected)
+// cardSelected (previously selected card ) cardDestination (destination pile lasT child)
+function moveCardToTableau(pile, event) { //tableau pile 
+  if (!isSelected) { //isSelected == false
     // can only select cards from the tableau and talon
     if (
       pile.classList.contains("tableau-pile") ||
       pile.classList.contains("talon-pile")
     ) {
-      var card = event.target;
+      var card = event.target; //card div
       if (card && card.classList.contains("up")) {
         card.classList.add("selected");
         var cardSiblings = findSiblings(card);
@@ -128,26 +278,30 @@ function moveCardToTableau(pile, event) {
       }
     }
   } else {
-    var cardsSelected = document.querySelectorAll(".card.selected");
-    var cardDestination = pile.lastChild;
+    var cardsSelected = document.querySelectorAll(".card.selected"); // source find by .selected
+    var cardDestination = pile.lastChild; // dest card found by when this card clicked
     // find parent pile of the first selected card
-    var parentPile = cardsSelected[0].closest(".tableau-pile");
-
+    var parentPile = cardsSelected[0].closest(".tableau-pile,.talon-pile");
+    // console.log(cardsSelected, parentPile);
     var validMove = false;
 
     if (pile.classList.contains("tableau-pile")) {
       validMove = validTableauMove(cardsSelected[0], cardDestination);
-    } else if (pile.classList.contains("foundations-pile")) {
+    } 
+    else if (pile.classList.contains("foundations-pile")) {
       // Check foundation pile of the correct suit, despite which foundation pile is clicked
       pile = document.querySelector(
         ".pile.foundations-pile." + cardsSelected[0].getAttribute("data-suit")
-      );
+      ); //finding type of suit in pile 
       cardDestination = pile.lastChild;
       validMove = validFoundationMove(cardsSelected[0], cardDestination);
     } else {
       // invalid move
+      console.log('invalid move')
       // TODO: possible error feedback (red flash/sound, etc)
     }
+
+    
     if (validMove) {
       // remove cardSelected from the old parent pile
       for (i = 0; i < cardsSelected.length; i++) {
