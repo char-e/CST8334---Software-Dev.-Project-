@@ -31,10 +31,14 @@
 
 .pile {
   position: relative;
-  padding-bottom: calc(218 / 152 * 100%);
+  padding-bottom: calc(88 / 57 * 100%);
   box-sizing: border-box;
   border: 1px solid #333;
   border-radius: 5px;
+
+  @media #{$sm-breakpoint} {
+    padding-bottom: calc(242.6669922 / 167.0869141 * 100%);
+  }
 }
 
 .placeholder-pile {
