@@ -11,20 +11,19 @@ body {
 }
 
 nav {
+  display: flex;
+  align-items: center;
   margin-bottom: 20px;
   margin-top: 20px;
-
-  :nth-child(1) {
-    padding-left: 15px;
-  }
 }
 
 .deal {
+  margin-left: auto;
   padding: 5px 20px;
 }
 
 .score {
-  margin-right: 15px;
+  padding: 0 15px;
 }
 
 .row {
@@ -55,15 +54,10 @@ nav {
   img {
     width: 50px;
     height: 50px;
-    margin-left: 15px;
 
     @media #{$sm-breakpoint} {
       width: 65px;
       height: 65px;
-    }
-
-    @media #{$md-breakpoint} {
-      margin-left: 45px;
     }
   }
 
@@ -78,15 +72,11 @@ nav {
 
   a {
     align-self: center;
-    margin: 0 15px 0 auto;
+    margin-left: auto;
     color: #fff;
 
     &:hover {
       text-decoration: none;
-    }
-
-    @media #{$md-breakpoint} {
-      margin-right: 45px;
     }
   }
 }
