@@ -45,13 +45,6 @@
   visibility: hidden;
 }
 
-.stock-pile {
-  background-image: url("/src/assets/card_back.svg");
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
-
 .heart::before {
   content: "\2665";
 }
