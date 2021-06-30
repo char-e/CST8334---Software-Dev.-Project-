@@ -92,6 +92,10 @@ var btn = document
     shuffledDeck = shuffle(d);
     dealCards(d);
     resetScore();
+    let talonPile =  document.querySelector('.talon-pile'); 
+    while (talonPile.hasChildNodes()) { 
+        talonPile.removeChild(talonPile.lastChild); 
+    }
   });
 
 // Takes resets current score and updates the startTime timestamp
