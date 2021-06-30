@@ -219,11 +219,17 @@ function getCardFromStock(pile, event){
   // console.log(pile, event);
   if(stockPileCard){ //stockPile is not empty
     stockPile.removeChild(stockPileCard);
+    if (talonPile.lastChild) {
+      talonPile.lastElementChild.classList.remove("selected");
+      isSelected = false;
+    }
     talonPile.appendChild(stockPileCard);
     stockPileCard.classList.add("up");
   }else{
     //make a button to get every card from talon pile to stack 
     while (talonPile.hasChildNodes()) { 
+      talonPile.lastElementChild.classList.remove("selected");
+      isSelected = false;
       talonPile.lastChild.classList.remove("up");
       stockPile.appendChild(talonPile.removeChild(talonPile.lastChild));
     }
