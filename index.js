@@ -306,6 +306,7 @@ attachDoubleClickEventListeners();
 function magicMove(pile, event,isDoubleClicked){
   if(isDoubleClicked){
     let cardSelected =  event.target;
+    if(cardSelected.nextSibling !== null) return;
     let suit = cardSelected.getAttribute("data-suit");
     
     foundationsPile =  document.querySelector( `.foundations-pile.${suit}`);
