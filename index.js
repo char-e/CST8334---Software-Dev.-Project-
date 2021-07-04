@@ -207,7 +207,7 @@ function clearPiles() {
 
 // add a click event listener to the tableau piles
 function attachEventListeners() {
-  var piles = document.querySelectorAll(".tableau-pile,.foundations-pile");
+  var piles = document.querySelectorAll(".foundations-pile");
   Array.prototype.forEach.call(piles, function (pile) {
     pile.addEventListener("click", function (event) {
       moveCardToTableau(pile, event);
@@ -268,16 +268,16 @@ function getCardFromStock(pile, event){
  *   TALON PILE MOVES  
  */
 
- function attachEventListenersToTalon() {
-  var piles = document.querySelectorAll(".talon-pile");
-  Array.prototype.forEach.call(piles, function (pile) {
-    pile.addEventListener("click", function (event) {
-      moveCardToTableau(pile, event);
-    });
-  });
-}
+//  function attachEventListenersToTalon() {
+//   var piles = document.querySelectorAll(".talon-pile");
+//   Array.prototype.forEach.call(piles, function (pile) {
+//     pile.addEventListener("click", function (event) {
+//       moveCardToTableau(pile, event);
+//     });
+//   });
+// }
 
-attachEventListenersToTalon();
+// attachEventListenersToTalon();
 
 // function moveCardToTalon(pile, event){
 //   console.log('Talon:: pile', pile)
@@ -310,7 +310,7 @@ function isDoubleClick() {
   }
 }
 
-function attachDoubleClickEventListeners() {
+function attachClickEventListeners() {
   var piles = document.querySelectorAll(".tableau-pile,.talon-pile");
   Array.prototype.forEach.call(piles, function (pile) {
     pile.addEventListener("click", function (event) {
@@ -318,12 +318,16 @@ function attachDoubleClickEventListeners() {
     });
   });
 }
-attachDoubleClickEventListeners();
+attachClickEventListeners();
 
 
 // Doubble click pt.2 AKA magicMove
 function magicMove(pile, event,isDoubleClicked){
-  if(isDoubleClicked){
+
+  // Check if the same pile was double clicked
+  // This check is required as rapidly clicking two different piles fulfills a 'double click'
+  // Run double click logic
+  if(isDoubleClicked && pile.lastChild && pile.lastChild.classList.contains("selected")){
     let cardSelected =  event.target;
     if(cardSelected.nextSibling !== null) return;
     let suit = cardSelected.getAttribute("data-suit");
@@ -341,6 +345,9 @@ function magicMove(pile, event,isDoubleClicked){
         moveTableauToFoundation(cardSelected, foundationsPile)
       }
     }
+  }
+  else { // Not a double click, run regular click logic
+    moveCardToTableau(pile, event)
   }
 }
 
@@ -362,26 +369,11 @@ function moveTableauToFoundation(cardSelected, destPile){
     parentPile.lastChild.classList.add("up");
   }
   destPile.appendChild(cardSelected);
-  cardSelected.classList.remove("selected");
-}
-
-
-// add a click event listener to the tableau piles
-function attachEventListeners() {
-  var piles = document.querySelectorAll(".tableau-pile,.foundations-pile");
-  Array.prototype.forEach.call(piles, function (pile) {
-    pile.addEventListener("click", function (event) {
-      moveCardToTableau(pile, event);
-    });
-  });
+  destPile.lastChild.classList.remove("selected");
+  isSelected = false;
 }
 
 /////////
-
-
-
-
-
 
 // function to move cards to the tableau
 //Main variables pile (current or destination  pile which is clicked), parentPile(pile of card having last child class = selected)
