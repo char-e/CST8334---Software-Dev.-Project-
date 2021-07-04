@@ -244,7 +244,7 @@ function getCardFromStock(pile, event){
     }
     talonPile.appendChild(stockPileCard);
     stockPileCard.classList.add("up");
-  }else{ // stockPile empty
+  }else if(scoreType == NORMALSCORING){ // stockPile empty
     addToScore(STOCK);
     //make a button to get every card from talon pile to stack 
     while (talonPile.hasChildNodes()) { 
@@ -253,6 +253,9 @@ function getCardFromStock(pile, event){
       talonPile.lastChild.classList.remove("up");
       stockPile.appendChild(talonPile.removeChild(talonPile.lastChild));
     }
+  } else {
+    // Lose/play again message
+    // Redeal
   }
 } 
 
