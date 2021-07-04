@@ -6,11 +6,12 @@ const ranks = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
 // scoring types
 const NORMALSCORING = 0, VEGASSCORING = 1;
 // scoring event types
-const SCORETABLEAU = 1, SCORETALON = 2, SCOREFOUNDATION = 3, SCOREGAMEOVER = 4, SCORE10S = 5;
+const SCORETABLEAU = 1, SCORETALON = 2, SCOREFOUNDATION = 3, SCOREGAMEOVER = 4, SCORE10S = 5, STOCK = 6;
 var scoreType = NORMALSCORING;
 var isSelected = false;
 var startTime = new Date().getTime();
-var tenSecondScoreTimer = function() {addToScore(SCORE10S);}
+var scoreTimer;
+var scoreTimerFunction = function() {addToScore(SCORE10S);}
 
 d = createDeck();
 //console.log(d);
@@ -98,7 +99,7 @@ var btn = document
     }
   });
 
-// Takes resets current score and updates the startTime timestamp
+// Resets current score and updates the startTime timestamp
 function resetScore() {
   var score = document.querySelector(".score");
   if(scoreType == VEGASSCORING) {
@@ -108,7 +109,8 @@ function resetScore() {
     score.innerHTML = "0";
   }
   startTime = new Date().getTime();
-  tenSecondScoreTimer = setInterval(tenSecondScoreTimer, 10000);
+  clearInterval(scoreTimer);
+  scoreTimer = setInterval(scoreTimerFunction, 10000);
 }
 
 // Alter score by a specific amount based on the score event and scoring type active
@@ -118,28 +120,38 @@ function resetScore() {
 // 3: card moved to foundation    10          5
 // 4: game ended                 bonus
 // 5: 10s elapsed                 -2
+// 6: Stock refresh               -100        lose!
 function addToScore(eventType) {
   var amount = 0;
   if(scoreType == NORMALSCORING) {
     switch(eventType) {
       case SCORETABLEAU:
         amount = 5;
+        // console.log("+5: Tableau");
         break;
       case SCORETALON:
         amount = 5;
+        // console.log("+5: Talon");
         break;
       case SCOREFOUNDATION:
         amount = 10;
+        // console.log("+10: Foundation");
         break;
       case SCOREGAMEOVER:
         // Add [700,000 / (seconds to win the game)] bonus points
         var gameLength = (new Date().getTime() - startTime) / 1000;
-        amount = Math.round(700000 / gameLength)
+        amount = Math.round(700000 / gameLength);
+        // console.log("+"+amount+": GameOver");
         break;
       case SCORE10S:
         amount = -2;
+        // console.log("-2: Timer");
+        break;
+      case STOCK:
+        amount = -100;
         break;
       default:
+        // console.log("0: Default");
         amount = 0;
     }
   }
@@ -147,6 +159,9 @@ function addToScore(eventType) {
     switch(eventType) {
       case SCOREFOUNDATION:
         amount = 5;
+        break;
+      case STOCK:
+        // Lose!
         break;
       default:
         amount = 0;
@@ -229,7 +244,8 @@ function getCardFromStock(pile, event){
     }
     talonPile.appendChild(stockPileCard);
     stockPileCard.classList.add("up");
-  }else{
+  }else{ // stockPile empty
+    addToScore(STOCK);
     //make a button to get every card from talon pile to stack 
     while (talonPile.hasChildNodes()) { 
       talonPile.lastElementChild.classList.remove("selected");
@@ -330,11 +346,20 @@ function moveTableauToFoundation(cardSelected, destPile){
   parentPile = cardSelected.closest(".tableau-pile,.talon-pile");
   console.log("ParentPile",parentPile);
   parentPile.removeChild(cardSelected);
-  
+  if(parentPile.classList.contains("talon-pile")) {
+    addToScore(SCORETALON);
+  }
+  if(destPile.classList.contains("foundations-pile")) {
+    addToScore(SCOREFOUNDATION);
+  }
   if (parentPile.lastChild) {
+    if(!parentPile.lastChild.classList.contains("up")) {
+      addToScore(SCORETABLEAU);
+    }
     parentPile.lastChild.classList.add("up");
   }
   destPile.appendChild(cardSelected);
+  cardSelected.classList.remove("selected");
 }
 
 
@@ -405,10 +430,11 @@ function moveCardToTableau(pile, event) { //tableau pile
       if(pile.classList.contains("foundations-pile")) {
         addToScore(SCOREFOUNDATION);
       }
+
       // Score 5 points when moving from the talon pile
-      // if(*card is from parent pile*) {
-      //   addToScore(SCORETALON);
-      // }
+      if(parentPile.classList.contains("talon-pile")) {
+        addToScore(SCORETALON);
+      }
 
       // remove cardSelected from the old parent pile
       for (i = 0; i < cardsSelected.length; i++) {
@@ -416,9 +442,11 @@ function moveCardToTableau(pile, event) { //tableau pile
       }
       // open the last card left in that pile (if any)
       if (parentPile.lastChild) {
+        if(!parentPile.lastChild.classList.contains("up")) {
+          // New card turned face up, add 5 to score
+          addToScore(SCORETABLEAU);
+        }
         parentPile.lastChild.classList.add("up");
-        // New card turned face up, add 5 to score
-        addToScore(SCORETABLEAU);
       }
       // add cardSelected to the end of the new pile
       for (i = 0; i < cardsSelected.length; i++) {
