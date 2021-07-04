@@ -174,7 +174,7 @@ function addToScore(eventType) {
 
 function win() {
   addToScore(SCOREGAMEOVER);
-  console.log("game length (s): " + gameLength);
+  clearInterval(scoreTimer);
 }
 
 function checkWin() {
@@ -245,7 +245,9 @@ function getCardFromStock(pile, event){
     talonPile.appendChild(stockPileCard);
     stockPileCard.classList.add("up");
   }else if(scoreType == NORMALSCORING){ // stockPile empty
-    addToScore(STOCK);
+    if(stockPile.hasChildNodes){
+      addToScore(STOCK);
+    }
     //make a button to get every card from talon pile to stack 
     while (talonPile.hasChildNodes()) { 
       talonPile.lastElementChild.classList.remove("selected");
@@ -254,6 +256,7 @@ function getCardFromStock(pile, event){
       stockPile.appendChild(talonPile.removeChild(talonPile.lastChild));
     }
   } else {
+    clearInterval(scoreTimer);
     // Lose/play again message
     // Redeal
   }
@@ -371,6 +374,9 @@ function moveTableauToFoundation(cardSelected, destPile){
   destPile.appendChild(cardSelected);
   destPile.lastChild.classList.remove("selected");
   isSelected = false;
+  if(checkWin()) {
+    win();
+  }
 }
 
 /////////
@@ -453,7 +459,7 @@ function moveCardToTableau(pile, event) { //tableau pile
     for (i = 0; i < cardsSelected.length; i++) {
       cardsSelected[i].classList.remove("selected");
     }
-
+    clickCount = 0;
     isSelected = false;
 
     if(checkWin()) {
