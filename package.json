@@ -2,8 +2,13 @@
   "name": "CST8334---Software-Dev.-Project-",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "targets": {
+    "main": false
+  },
   "scripts": {
+    "start": "parcel serve ./index.html",
+    "build": "parcel build ./index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,6 +23,8 @@
   },
   "homepage": "https://github.com/char-e/CST8334---Software-Dev.-Project-#readme",
   "devDependencies": {
+    "@parcel/transformer-sass": "^2.0.0-nightly.731",
+    "parcel": "^2.0.0-nightly.729",
     "sass": "^1.33.0"
   }
 }

@@ -10,21 +10,16 @@ First, clone this repository by running this command:
 
     git clone https://github.com/char-e/CST8334---Software-Dev.-Project-.git
 
-Then install *parcel-bundler* package globally:
-
-    npm install -g parcel-bundler
-
-Next install all dependencies:
+Then install all dependencies:
 
     npm i
 
 Finally, start parcel development server:
 
-    parcel index.html
+    npm start
 
 You can now access this application in the web browser:
 
     http://localhost:1234
 
 Make changes to HTML, SCSS and JavaScript files - Parcel will automatically determine this changes and makes its magic.
-

@@ -1,236 +1,449 @@
 .card {
   position: absolute;
-  width: 150px;
-  height: 218px;
-  background-image: url("/src/assets/card_back.svg");
-  background-size: 150px 218px;
+  width: calc(100% + 2px);
+  height: 100%;
+  background-image: url("/src/assets/Minicard_back.svg");
+  background-size: 100%;
+  background-repeat: no-repeat;
   border-radius: 5px;
   //box-shadow: 0 0 5px rgb(0 0 0 / 25%), 0 2px 1px rgb(0 0 0 / 50%);
 
+  @media #{$sm-breakpoint} {
+    background-image: url("/src/assets/card_back.svg");
+  }
+
   &.selected {
-    box-shadow: 0 0 5px rgb(255 255 0 / 90%), 0 2px 1px rgb(255 255 0 / 90%);
+    box-shadow: 0 0 5px 3px rgb(255 255 0 / 90%);
   }
 
   &.up {
     /* Kings */
     &[data-rank="K"][data-suit="club"] {
-      background-image: url("/src/assets/king_of_clubs.svg");
+      background-image: url("/src/assets/Minicard_KC.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/king_of_clubs.svg");
+      }
     }
 
     &[data-rank="K"][data-suit="heart"] {
-      background-image: url("/src/assets/king_of_hearts.svg");
+      background-image: url("/src/assets/Minicard_KH.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/king_of_hearts.svg");
+      }
     }
 
     &[data-rank="K"][data-suit="diamond"] {
-      background-image: url("/src/assets/king_of_diamonds.svg");
+      background-image: url("/src/assets/Minicard_KD.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/king_of_diamonds.svg");
+      }
     }
 
     &[data-rank="K"][data-suit="spade"] {
-      background-image: url("/src/assets/king_of_spades.svg");
+      background-image: url("/src/assets/Minicard_KS.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/king_of_spades.svg");
+      }
     }
 
     /* Queens */
     &[data-rank="Q"][data-suit="club"] {
-      background-image: url("/src/assets/queen_of_clubs.svg");
+      background-image: url("/src/assets/Minicard_QC.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/queen_of_clubs.svg");
+      }
     }
 
     &[data-rank="Q"][data-suit="heart"] {
-      background-image: url("/src/assets/queen_of_hearts.svg");
+      background-image: url("/src/assets/Minicard_QH.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/queen_of_hearts.svg");
+      }
     }
 
     &[data-rank="Q"][data-suit="diamond"] {
-      background-image: url("/src/assets/queen_of_diamonds.svg");
+      background-image: url("/src/assets/Minicard_QD.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/queen_of_diamonds.svg");
+      }
     }
 
     &[data-rank="Q"][data-suit="spade"] {
-      background-image: url("/src/assets/queen_of_spades.svg");
+      background-image: url("/src/assets/Minicard_QS.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/queen_of_spades.svg");
+      }
     }
 
     /* Jacks */
     &[data-rank="J"][data-suit="club"] {
-      background-image: url("/src/assets/jack_of_clubs.svg");
+      background-image: url("/src/assets/Minicard_JC.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/jack_of_clubs.svg");
+      }
     }
 
     &[data-rank="J"][data-suit="heart"] {
-      background-image: url("/src/assets/jack_of_hearts.svg");
+      background-image: url("/src/assets/Minicard_JH.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/jack_of_hearts.svg");
+      }
     }
 
     &[data-rank="J"][data-suit="diamond"] {
-      background-image: url("/src/assets/jack_of_diamonds.svg");
+      background-image: url("/src/assets/Minicard_JD.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/jack_of_diamonds.svg");
+      }
     }
 
     &[data-rank="J"][data-suit="spade"] {
-      background-image: url("/src/assets/jack_of_spades.svg");
+      background-image: url("/src/assets/Minicard_JS.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/jack_of_spades.svg");
+      }
     }
 
     /* Aces */
     &[data-rank="A"][data-suit="club"] {
-      background-image: url("/src/assets/ace_of_clubs.svg");
+      background-image: url("/src/assets/Minicard_AC.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/ace_of_clubs.svg");
+      }
     }
 
     &[data-rank="A"][data-suit="heart"] {
-      background-image: url("/src/assets/ace_of_hearts.svg");
+      background-image: url("/src/assets/Minicard_AH.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/ace_of_hearts.svg");
+      }
     }
 
     &[data-rank="A"][data-suit="diamond"] {
-      background-image: url("/src/assets/ace_of_diamonds.svg");
+      background-image: url("/src/assets/Minicard_AD.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/ace_of_diamonds.svg");
+      }
     }
 
     &[data-rank="A"][data-suit="spade"] {
-      background-image: url("/src/assets/ace_of_spades.svg");
+      background-image: url("/src/assets/Minicard_AS.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/ace_of_spades.svg");
+      }
     }
 
     /* 10s */
     &[data-rank="10"][data-suit="club"] {
-      background-image: url("/src/assets/10_of_clubs.svg");
+      background-image: url("/src/assets/Minicard_10C.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/10_of_clubs.svg");
+      }
     }
 
     &[data-rank="10"][data-suit="heart"] {
-      background-image: url("/src/assets/10_of_hearts.svg");
+      background-image: url("/src/assets/Minicard_10H.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/10_of_hearts.svg");
+      }
     }
 
     &[data-rank="10"][data-suit="diamond"] {
-      background-image: url("/src/assets/10_of_diamonds.svg");
+      background-image: url("/src/assets/Minicard_10D.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/10_of_diamonds.svg");
+      }
     }
 
     &[data-rank="10"][data-suit="spade"] {
-      background-image: url("/src/assets/10_of_spades.svg");
+      background-image: url("/src/assets/Minicard_10S.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/10_of_spades.svg");
+      }
     }
 
     /* 9s */
     &[data-rank="9"][data-suit="club"] {
-      background-image: url("/src/assets/9_of_clubs.svg");
+      background-image: url("/src/assets/Minicard_9C.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/9_of_clubs.svg");
+      }
     }
 
     &[data-rank="9"][data-suit="heart"] {
-      background-image: url("/src/assets/9_of_hearts.svg");
+      background-image: url("/src/assets/Minicard_9H.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/9_of_hearts.svg");
+      }
     }
 
     &[data-rank="9"][data-suit="diamond"] {
-      background-image: url("/src/assets/9_of_diamonds.svg");
+      background-image: url("/src/assets/Minicard_9D.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/9_of_diamonds.svg");
+      }
     }
 
     &[data-rank="9"][data-suit="spade"] {
-      background-image: url("/src/assets/9_of_spades.svg");
+      background-image: url("/src/assets/Minicard_9S.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/9_of_spades.svg");
+      }
     }
 
     /* 8s */
     &[data-rank="8"][data-suit="club"] {
-      background-image: url("/src/assets/8_of_clubs.svg");
+      background-image: url("/src/assets/Minicard_8C.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/8_of_clubs.svg");
+      }
     }
 
     &[data-rank="8"][data-suit="heart"] {
-      background-image: url("/src/assets/8_of_hearts.svg");
+      background-image: url("/src/assets/Minicard_8H.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/8_of_hearts.svg");
+      }
     }
 
     &[data-rank="8"][data-suit="diamond"] {
-      background-image: url("/src/assets/8_of_diamonds.svg");
+      background-image: url("/src/assets/Minicard_8D.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/8_of_diamonds.svg");
+      }
     }
 
     &[data-rank="8"][data-suit="spade"] {
-      background-image: url("/src/assets/8_of_spades.svg");
+      background-image: url("/src/assets/Minicard_8S.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/8_of_spades.svg");
+      }
     }
 
     /* 7s */
     &[data-rank="7"][data-suit="club"] {
-      background-image: url("/src/assets/7_of_clubs.svg");
+      background-image: url("/src/assets/Minicard_7C.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/7_of_clubs.svg");
+      }
     }
 
     &[data-rank="7"][data-suit="heart"] {
-      background-image: url("/src/assets/7_of_hearts.svg");
+      background-image: url("/src/assets/Minicard_7H.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/7_of_hearts.svg");
+      }
     }
 
     &[data-rank="7"][data-suit="diamond"] {
-      background-image: url("/src/assets/7_of_diamonds.svg");
+      background-image: url("/src/assets/Minicard_7D.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/7_of_diamonds.svg");
+      }
     }
 
     &[data-rank="7"][data-suit="spade"] {
-      background-image: url("/src/assets/7_of_spades.svg");
+      background-image: url("/src/assets/Minicard_7S.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/7_of_spades.svg");
+      }
     }
 
     /* 6s */
     &[data-rank="6"][data-suit="club"] {
-      background-image: url("/src/assets/6_of_clubs.svg");
+      background-image: url("/src/assets/Minicard_6C.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/6_of_clubs.svg");
+      }
     }
 
     &[data-rank="6"][data-suit="heart"] {
-      background-image: url("/src/assets/6_of_hearts.svg");
+      background-image: url("/src/assets/Minicard_6H.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/6_of_hearts.svg");
+      }
     }
 
     &[data-rank="6"][data-suit="diamond"] {
-      background-image: url("/src/assets/6_of_diamonds.svg");
+      background-image: url("/src/assets/Minicard_6D.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/6_of_diamonds.svg");
+      }
     }
 
     &[data-rank="6"][data-suit="spade"] {
-      background-image: url("/src/assets/6_of_spades.svg");
+      background-image: url("/src/assets/Minicard_6S.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/6_of_spades.svg");
+      }
     }
 
     /* 5s */
     &[data-rank="5"][data-suit="club"] {
-      background-image: url("/src/assets/5_of_clubs.svg");
+      background-image: url("/src/assets/Minicard_5C.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/5_of_clubs.svg");
+      }
     }
 
     &[data-rank="5"][data-suit="heart"] {
-      background-image: url("/src/assets/5_of_hearts.svg");
+      background-image: url("/src/assets/Minicard_5H.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/5_of_hearts.svg");
+      }
     }
 
     &[data-rank="5"][data-suit="diamond"] {
-      background-image: url("/src/assets/5_of_diamonds.svg");
+      background-image: url("/src/assets/Minicard_5D.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/5_of_diamonds.svg");
+      }
     }
 
     &[data-rank="5"][data-suit="spade"] {
-      background-image: url("/src/assets/5_of_spades.svg");
+      background-image: url("/src/assets/Minicard_5S.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/5_of_spades.svg");
+      }
     }
 
     /* 4s */
     &[data-rank="4"][data-suit="club"] {
-      background-image: url("/src/assets/4_of_clubs.svg");
+      background-image: url("/src/assets/Minicard_4C.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/4_of_clubs.svg");
+      }
     }
 
     &[data-rank="4"][data-suit="heart"] {
-      background-image: url("/src/assets/4_of_hearts.svg");
+      background-image: url("/src/assets/Minicard_4H.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/4_of_hearts.svg");
+      }
     }
 
     &[data-rank="4"][data-suit="diamond"] {
-      background-image: url("/src/assets/4_of_diamonds.svg");
+      background-image: url("/src/assets/Minicard_4D.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/4_of_diamonds.svg");
+      }
     }
 
     &[data-rank="4"][data-suit="spade"] {
-      background-image: url("/src/assets/4_of_spades.svg");
+      background-image: url("/src/assets/Minicard_4S.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/4_of_spades.svg");
+      }
     }
 
     /* 3s */
     &[data-rank="3"][data-suit="club"] {
-      background-image: url("/src/assets/3_of_clubs.svg");
+      background-image: url("/src/assets/Minicard_3C.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/3_of_clubs.svg");
+      }
     }
 
     &[data-rank="3"][data-suit="heart"] {
-      background-image: url("/src/assets/3_of_hearts.svg");
+      background-image: url("/src/assets/Minicard_3H.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/3_of_hearts.svg");
+      }
     }
 
     &[data-rank="3"][data-suit="diamond"] {
-      background-image: url("/src/assets/3_of_diamonds.svg");
+      background-image: url("/src/assets/Minicard_3D.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/3_of_diamonds.svg");
+      }
     }
 
     &[data-rank="3"][data-suit="spade"] {
-      background-image: url("/src/assets/3_of_spades.svg");
+      background-image: url("/src/assets/Minicard_3S.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/3_of_spades.svg");
+      }
     }
 
     /* 2s */
     &[data-rank="2"][data-suit="club"] {
-      background-image: url("/src/assets/2_of_clubs.svg");
+      background-image: url("/src/assets/Minicard_2C.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/2_of_clubs.svg");
+      }
     }
 
     &[data-rank="2"][data-suit="heart"] {
-      background-image: url("/src/assets/2_of_hearts.svg");
+      background-image: url("/src/assets/Minicard_2H.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/2_of_hearts.svg");
+      }
     }
 
     &[data-rank="2"][data-suit="diamond"] {
-      background-image: url("/src/assets/2_of_diamonds.svg");
+      background-image: url("/src/assets/Minicard_2D.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/2_of_diamonds.svg");
+      }
     }
 
     &[data-rank="2"][data-suit="spade"] {
-      background-image: url("/src/assets/2_of_spades.svg");
+      background-image: url("/src/assets/Minicard_2S.svg");
+
+      @media #{$sm-breakpoint} {
+        background-image: url("/src/assets/2_of_spades.svg");
+      }
     }
   }
 }
@@ -282,5 +495,33 @@
 
   &:nth-of-type(13) {
     top: 360px;
+  }
+
+  &:nth-of-type(14) {
+    top: 390px;
+  }
+
+  &:nth-of-type(15) {
+    top: 420px;
+  }
+
+  &:nth-of-type(16) {
+    top: 450px;
+  }
+
+  &:nth-of-type(17) {
+    top: 480px;
+  }
+
+  &:nth-of-type(18) {
+    top: 510px;
+  }
+
+  &:nth-of-type(19) {
+    top: 540px;
+  }
+
+  &:nth-of-type(20) {
+    top: 570px;
   }
 }

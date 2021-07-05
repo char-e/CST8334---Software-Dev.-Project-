@@ -1,9 +1,5 @@
-html,
 body {
-  height: 100%;
-}
-
-body {
+  min-width: 320px;
   background-color: darkgreen;
   margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -11,27 +7,72 @@ body {
 }
 
 nav {
+  display: flex;
+  align-items: center;
   margin-bottom: 20px;
   margin-top: 20px;
-
-  :nth-child(1) {
-    padding-left: 15px;
-  }
 }
 
 .deal {
+  margin-left: auto;
   padding: 5px 20px;
 }
 
 .score {
-  margin-right: 15px;
+  padding: 0 15px;
 }
 
 .row {
-  width: 100%;
-  max-width: 1190px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 0;
-  margin-bottom: 0;
+  margin: 0 15px;
+
+  @media #{$md-breakpoint} {
+    margin: 0 45px;
+  }
+
+  @media #{$lg-breakpoint} {
+    width: 100%;
+    max-width: 1190px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.header {
+  display: flex;
+  margin-top: 15px;
+
+  @media #{$md-breakpoint} {
+    margin-top: 30px;
+  }
+
+  img {
+    width: 50px;
+    height: 50px;
+
+    @media #{$sm-breakpoint} {
+      width: 65px;
+      height: 65px;
+    }
+  }
+
+  h1 {
+    font-size: 22px;
+    margin: 14px 0 14px 10px;
+
+    @media #{$sm-breakpoint} {
+      font-size: 32px;
+    }
+  }
+
+  a {
+    align-self: center;
+    margin-left: auto;
+    color: #fff;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
 }

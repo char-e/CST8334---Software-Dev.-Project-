@@ -1,26 +1,43 @@
 .first-row,
 .second-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  display: grid;
+  column-gap: 5px;
+  grid-template-columns: repeat(7, 1fr);
+
+  @media #{$sm-breakpoint} {
+    column-gap: 10px;
+  }
+
+  @media #{$md-breakpoint} {
+    column-gap: 15px;
+  }
+
+  @media #{$lg-breakpoint} {
+    column-gap: 20px;
+  }
 }
 
 .first-row {
-  margin-bottom: 80px;
+  margin-bottom: 30px;
+
+  @media #{$sm-breakpoint} {
+    margin-bottom: 60px;
+  }
+
+  @media #{$lg-breakpoint} {
+    margin-bottom: 80px;
+  }
 }
 
 .pile {
   position: relative;
-  width: 150px;
-  height: 218px;
-  margin-right: 15px;
+  padding-bottom: calc(88 / 57 * 100%);
   box-sizing: border-box;
   border: 1px solid #333;
   border-radius: 5px;
-  flex-shrink: 0; // for now
 
-  &:last-of-type {
-    margin-right: 0;
+  @media #{$sm-breakpoint} {
+    padding-bottom: calc(242.6669922 / 167.0869141 * 100%);
   }
 }
 
@@ -28,48 +45,47 @@
   visibility: hidden;
 }
 
-.stock-pile {
-  background-image: url("/src/assets/card_back.svg");
-  background-size: 150px 218px;
-}
-
 .heart::before {
-  position: absolute;
-  top: 45%;
-  right:25%;
-  transform: translate(0, -50%);
   content: "\2665";
-  font-size: 100px;
-  color: #333;
 }
 
 .diamond::before {
-  position: absolute;
-  top: 45%;
-  right:25%;
-  transform: translate(0, -50%);
   content: "\2666";
-  font-size: 100px;
-  color: #333;
 }
 
 .spade::before {
-  position: absolute;
-  top: 45%;
-  right:25%;
-  transform: translate(0, -50%);
   content: "\2660";
-  font-size: 100px;
-  color: #333;
 }
 
 .club::before {
-  position: absolute;
-  top: 45%;
-  right:25%;
-  transform: translate(0, -50%);
   content: "\2663";
-  font-size: 100px;
-  color: #333;
 }
+
+.heart,
+.diamond,
+.spade,
+.club {
+  &::before {
+    position: absolute;
+    width: 100%;
+    top: 25%;
+    left: 0;
+    font-size: 8vw;
+    line-height: 1;
+    text-align: center;
+    color: #333;
+    opacity: 0.6;
+
+    @media #{$sm-breakpoint} {
+      font-size: 10vw;
+      top: 20%;
+    }
+
+    @media #{$md-breakpoint} {
+      font-size: 100px;
+      top: 22%;
+    }
+  }
+}
+
 
