@@ -83,25 +83,39 @@ function faceUp() {
   }
 }
 
-// add a click event listener to the 'deal' btn
+function dealButtonClicked() {
+  isSelected = false;
+  clearPiles();
+  d = createDeck();
+  shuffledDeck = shuffle(d);
+  dealCards(d);
+  resetScore();
+  let talonPile = document.querySelector('.talon-pile'); 
+  while (talonPile.hasChildNodes()) { 
+      talonPile.removeChild(talonPile.lastChild); 
+  }
+}
+
+// add a click event listener to the 'deal' btn and vegas scoring toggle
 var btn = document
   .getElementById("dealbtn")
-  .addEventListener("click", function () {
-    isSelected = false;
-    clearPiles();
-    d = createDeck();
-    shuffledDeck = shuffle(d);
-    dealCards(d);
-    resetScore();
-    let talonPile =  document.querySelector('.talon-pile'); 
-    while (talonPile.hasChildNodes()) { 
-        talonPile.removeChild(talonPile.lastChild); 
-    }
+  .addEventListener("click", function() {
+    dealButtonClicked();
+  });
+var btn = document
+  .getElementById("vegasSwitch")
+  .addEventListener("change", function() {
+    dealButtonClicked();
   });
 
 // Resets current score and updates the startTime timestamp
 function resetScore() {
   var score = document.querySelector(".score");
+  var vegasSwitch = document.getElementById("vegasSwitch");
+  scoreType = NORMALSCORING;
+  if(vegasSwitch.checked) {
+    scoreType = VEGASSCORING;
+  }
   if(scoreType == VEGASSCORING) {
     score.innerHTML = "-52";
   }
@@ -245,7 +259,7 @@ function getCardFromStock(pile, event){
     talonPile.appendChild(stockPileCard);
     stockPileCard.classList.add("up");
   }else if(scoreType == NORMALSCORING){ // stockPile empty
-    if(stockPile.hasChildNodes){
+    if(talonPile.hasChildNodes()) {
       addToScore(STOCK);
     }
     //make a button to get every card from talon pile to stack 
@@ -338,7 +352,7 @@ function magicMove(pile, event,isDoubleClicked){
     foundationsPile =  document.querySelector( `.foundations-pile.${suit}`);
     if(foundationsPile == null) return;
     if(!foundationsPile.hasChildNodes()){ //dont have child
-      console.log(event.target,isDoubleClicked)
+      // console.log(event.target,isDoubleClicked)
       if(cardSelected.getAttribute("data-rank") == ranks[0]){
         moveTableauToFoundation(cardSelected, foundationsPile);
       }
@@ -348,6 +362,12 @@ function magicMove(pile, event,isDoubleClicked){
         moveTableauToFoundation(cardSelected, foundationsPile)
       }
     }
+    // deselect card
+    var cardsSelected = document.querySelectorAll(".card.selected");
+    for (i = 0; i < cardsSelected.length; i++) {
+      cardsSelected[i].classList.remove("selected");
+    }
+    isSelected = false;
   }
   else { // Not a double click, run regular click logic
     moveCardToTableau(pile, event)
@@ -357,7 +377,7 @@ function magicMove(pile, event,isDoubleClicked){
 
 function moveTableauToFoundation(cardSelected, destPile){
   parentPile = cardSelected.closest(".tableau-pile,.talon-pile");
-  console.log("ParentPile",parentPile);
+  // console.log("ParentPile",parentPile);
   parentPile.removeChild(cardSelected);
   if(parentPile.classList.contains("talon-pile")) {
     addToScore(SCORETALON);
@@ -372,8 +392,6 @@ function moveTableauToFoundation(cardSelected, destPile){
     parentPile.lastChild.classList.add("up");
   }
   destPile.appendChild(cardSelected);
-  destPile.lastChild.classList.remove("selected");
-  isSelected = false;
   if(checkWin()) {
     win();
   }
