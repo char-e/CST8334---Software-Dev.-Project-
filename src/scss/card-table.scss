@@ -41,6 +41,20 @@
   }
 }
 
+.stock-pile {
+  .card:nth-child(2) {
+    top: 5px;
+  }
+
+  .card:nth-child(3) {
+    top: 10px;
+  }
+
+  .card:nth-child(n + 4) {
+    top: 15px;
+  }
+}
+
 .placeholder-pile {
   visibility: hidden;
 }
