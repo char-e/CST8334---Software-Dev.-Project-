@@ -346,32 +346,52 @@ function magicMove(pile, event,isDoubleClicked){
   // Run double click logic
   if(isDoubleClicked && pile.lastChild && pile.lastChild.classList.contains("selected")){
     let cardSelected =  event.target;
-    if(cardSelected.nextSibling !== null) return;
     let suit = cardSelected.getAttribute("data-suit");
-    
-    foundationsPile =  document.querySelector( `.foundations-pile.${suit}`);
-    if(foundationsPile == null) return;
-    if(!foundationsPile.hasChildNodes()){ //dont have child
-      // console.log(event.target,isDoubleClicked)
-      if(cardSelected.getAttribute("data-rank") == ranks[0]){
-        moveTableauToFoundation(cardSelected, foundationsPile);
-      }
-    }else{
-      let isValid = validFoundationMove(cardSelected, foundationsPile.lastChild); 
-      if(isValid){
-        moveTableauToFoundation(cardSelected, foundationsPile)
+    let foundationsPile = document.querySelector(`.foundations-pile.${suit}`);
+    let cardDestination = foundationsPile.lastChild;
+    if (validFoundationMove(cardSelected, cardDestination)) {
+      if (cardSelected.nextSibling === null) {
+        moveTableauToFoundation(cardSelected, foundationsPile); //(destPile, selectedCArd)
+        return;
       }
     }
-    // deselect card
-    var cardsSelected = document.querySelectorAll(".card.selected");
-    for (i = 0; i < cardsSelected.length; i++) {
-      cardsSelected[i].classList.remove("selected");
+    let tableauPileCollection = document.querySelectorAll(`.tableau-pile`);
+    for (let i = 0; i < tableauPileCollection.length; i++) {
+      let cardDest = tableauPileCollection[i].lastChild;
+      if (validTableauMove(cardSelected, cardDest)) {
+        moveCardToTableau(tableauPileCollection[i], cardSelected); //(destPile, selectedCArd)
+      }
+
     }
-    isSelected = false;
   }
   else { // Not a double click, run regular click logic
     moveCardToTableau(pile, event)
   }
+}
+
+function isTableauSuitMatch(cardSelected, cardDestination) {
+
+  if (
+    (cardSelected.getAttribute("data-suit") == suits[0] ||
+      cardSelected.getAttribute("data-suit") == suits[1]) &&
+    (cardDestination.getAttribute("data-suit") == suits[0] ||
+      cardDestination.getAttribute("data-suit") == suits[1])
+  ) {
+    console.log("Bad suit: both cards red");
+    return false;
+  }
+  // if both are black, return false
+  if (
+    (cardSelected.getAttribute("data-suit") == suits[2] ||
+      cardSelected.getAttribute("data-suit") == suits[3]) &&
+    (cardDestination.getAttribute("data-suit") == suits[2] ||
+      cardDestination.getAttribute("data-suit") == suits[3])
+  ) {
+    console.log("Bad suit: both cards black");
+    return false;
+  }
+
+  return true;
 }
 
 
