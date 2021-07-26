@@ -83,25 +83,39 @@ function faceUp() {
   }
 }
 
-// add a click event listener to the 'deal' btn
+function dealButtonClicked() {
+  isSelected = false;
+  clearPiles();
+  d = createDeck();
+  shuffledDeck = shuffle(d);
+  dealCards(d);
+  resetScore();
+  let talonPile = document.querySelector('.talon-pile'); 
+  while (talonPile.hasChildNodes()) { 
+      talonPile.removeChild(talonPile.lastChild); 
+  }
+}
+
+// add a click event listener to the 'deal' btn and vegas scoring toggle
 var btn = document
   .getElementById("dealbtn")
-  .addEventListener("click", function () {
-    isSelected = false;
-    clearPiles();
-    d = createDeck();
-    shuffledDeck = shuffle(d);
-    dealCards(d);
-    resetScore();
-    let talonPile =  document.querySelector('.talon-pile'); 
-    while (talonPile.hasChildNodes()) { 
-        talonPile.removeChild(talonPile.lastChild); 
-    }
+  .addEventListener("click", function() {
+    dealButtonClicked();
+  });
+var btn = document
+  .getElementById("vegasSwitch")
+  .addEventListener("change", function() {
+    dealButtonClicked();
   });
 
 // Resets current score and updates the startTime timestamp
 function resetScore() {
   var score = document.querySelector(".score");
+  var vegasSwitch = document.getElementById("vegasSwitch");
+  scoreType = NORMALSCORING;
+  if(vegasSwitch.checked) {
+    scoreType = VEGASSCORING;
+  }
   if(scoreType == VEGASSCORING) {
     score.innerHTML = "-52";
   }
@@ -245,7 +259,7 @@ function getCardFromStock(pile, event){
     talonPile.appendChild(stockPileCard);
     stockPileCard.classList.add("up");
   }else if(scoreType == NORMALSCORING){ // stockPile empty
-    if(stockPile.hasChildNodes){
+    if(talonPile.hasChildNodes()) {
       addToScore(STOCK);
     }
     //make a button to get every card from talon pile to stack 
@@ -332,21 +346,22 @@ function magicMove(pile, event,isDoubleClicked){
   // Run double click logic
   if(isDoubleClicked && pile.lastChild && pile.lastChild.classList.contains("selected")){
     let cardSelected =  event.target;
-    if(cardSelected.nextSibling !== null) return;
     let suit = cardSelected.getAttribute("data-suit");
-    
-    foundationsPile =  document.querySelector( `.foundations-pile.${suit}`);
-    if(foundationsPile == null) return;
-    if(!foundationsPile.hasChildNodes()){ //dont have child
-      console.log(event.target,isDoubleClicked)
-      if(cardSelected.getAttribute("data-rank") == ranks[0]){
-        moveTableauToFoundation(cardSelected, foundationsPile);
+    let foundationsPile = document.querySelector(`.foundations-pile.${suit}`);
+    let cardDestination = foundationsPile.lastChild;
+    if (validFoundationMove(cardSelected, cardDestination)) {
+      if (cardSelected.nextSibling === null) {
+        moveTableauToFoundation(cardSelected, foundationsPile); //(destPile, selectedCArd)
+        return;
       }
-    }else{
-      let isValid = validFoundationMove(cardSelected, foundationsPile.lastChild); 
-      if(isValid){
-        moveTableauToFoundation(cardSelected, foundationsPile)
+    }
+    let tableauPileCollection = document.querySelectorAll(`.tableau-pile`);
+    for (let i = 0; i < tableauPileCollection.length; i++) {
+      let cardDest = tableauPileCollection[i].lastChild;
+      if (validTableauMove(cardSelected, cardDest)) {
+        moveCardToTableau(tableauPileCollection[i], cardSelected); //(destPile, selectedCArd)
       }
+
     }
   }
   else { // Not a double click, run regular click logic
@@ -354,10 +369,35 @@ function magicMove(pile, event,isDoubleClicked){
   }
 }
 
+function isTableauSuitMatch(cardSelected, cardDestination) {
+
+  if (
+    (cardSelected.getAttribute("data-suit") == suits[0] ||
+      cardSelected.getAttribute("data-suit") == suits[1]) &&
+    (cardDestination.getAttribute("data-suit") == suits[0] ||
+      cardDestination.getAttribute("data-suit") == suits[1])
+  ) {
+    console.log("Bad suit: both cards red");
+    return false;
+  }
+  // if both are black, return false
+  if (
+    (cardSelected.getAttribute("data-suit") == suits[2] ||
+      cardSelected.getAttribute("data-suit") == suits[3]) &&
+    (cardDestination.getAttribute("data-suit") == suits[2] ||
+      cardDestination.getAttribute("data-suit") == suits[3])
+  ) {
+    console.log("Bad suit: both cards black");
+    return false;
+  }
+
+  return true;
+}
+
 
 function moveTableauToFoundation(cardSelected, destPile){
   parentPile = cardSelected.closest(".tableau-pile,.talon-pile");
-  console.log("ParentPile",parentPile);
+  // console.log("ParentPile",parentPile);
   parentPile.removeChild(cardSelected);
   if(parentPile.classList.contains("talon-pile")) {
     addToScore(SCORETALON);
@@ -372,8 +412,6 @@ function moveTableauToFoundation(cardSelected, destPile){
     parentPile.lastChild.classList.add("up");
   }
   destPile.appendChild(cardSelected);
-  destPile.lastChild.classList.remove("selected");
-  isSelected = false;
   if(checkWin()) {
     win();
   }

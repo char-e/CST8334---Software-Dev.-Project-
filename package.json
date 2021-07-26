@@ -23,8 +23,8 @@
   },
   "homepage": "https://github.com/char-e/CST8334---Software-Dev.-Project-#readme",
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.0.0-nightly.731",
-    "parcel": "^2.0.0-nightly.729",
-    "sass": "^1.33.0"
+    "@parcel/transformer-sass": "2.0.0-nightly.731",
+    "parcel": "2.0.0-nightly.729",
+    "sass": "1.33.0"
   }
 }
