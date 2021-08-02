@@ -12,7 +12,13 @@
         <div class="header">
           <img alt="Logo" src="./src/assets/logo.png" />
           <h1>Solitaire</h1>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSeAddlAk8YMFda91uQYhefrFF6PNL-5IZQnfoycOrb6vX9Xzg/viewform">Customer Survey</a>
+          <div class="info-group">
+            <a href="#" data-custom-open="modal-1">Rules</a>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSeAddlAk8YMFda91uQYhefrFF6PNL-5IZQnfoycOrb6vX9Xzg/viewform"
+              >Survey</a
+            >
+          </div>
         </div>
       </div>
     </header>
@@ -20,15 +26,15 @@
       <div class="row">
         <nav>
           <span>Score: </span>
-          <span class="score">0</span>        
+          <span class="score">0</span>
           <div class="control-group">
             <label for="switch">Vegas Mode</label>
             <label class="switch">
-              <input type="checkbox" id="vegasSwitch"/>
+              <input type="checkbox" id="vegasSwitch" />
               <span class="slider round"></span>
             </label>
             <button class="deal" id="dealbtn">Deal</button>
-          </div>        
+          </div>
         </nav>
       </div>
       <div class="card-table">
@@ -58,7 +64,63 @@
           </div>
         </div>
       </div>
+      <div class="modal micromodal-slide hidden" id="modal-1" aria-hidden="true">
+        <div class="modal__overlay" tabindex="-1" data-custom-close="modal-1">
+          <div
+            class="modal__container"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-1-title"
+          >
+            <header class="modal__header">
+              <h2 class="modal__title" id="modal-1-title">How to Play</h2>
+              <button
+                class="modal__close"
+                aria-label="Close modal"
+                data-custom-close="modal-1"
+              ></button>
+            </header>
+            <main class="modal__content" id="modal-1-content">
+              <p>
+                Within the Tableau, faced up cards are transferred in descending
+                order (King to Ace) and in alternating color. The player may
+                transfer the top card or stack of faced up cards to any of the
+                piles in an attempt to create the sequence of descending value
+                and alternating color. An empty spot in the Tableau may be
+                filled with a king. If the player cannot move any cards within
+                the Tableau, 3 cards are selected from the top of the Stock pile
+                to form the Talon. If the first card in the Talon cannot be
+                played, 3 more cards are selected from the Stock. When and if
+                the Stock runs out, the Talon is reshuffled to form a new Stock
+                and the process continues. While the player is sequencing the
+                Tableau, the player is also trying to build up the Foundations
+                stacks. The top card from the Talon or the Tableau stacks may be
+                transferred to the Foundations. When all cards have been
+                transferred in ascending order (Ace to King) to the Foundations,
+                the game is won. If no more moves can be made and the
+                Foundations is incomplete, the game is lost.
+              </p>
+            </main>
+            <footer class="modal__footer">
+              <button data-custom-close="modal-1">Close</button>
+            </footer>
+          </div>
+        </div>
+      </div>
     </main>
     <script src="./index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/micromodal@0.4.6/dist/micromodal.min.js"></script>
+    <script>
+      MicroModal.init({
+        openTrigger: "data-custom-open",
+        closeTrigger: "data-custom-close",
+        openClass: "is-open",
+        disableScroll: true,
+        disableFocus: false,
+        awaitOpenAnimation: true,
+        awaitCloseAnimation: true,
+        debugMode: true,
+      });
+    </script>
   </body>
 </html>
