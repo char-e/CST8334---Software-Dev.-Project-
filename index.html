@@ -12,7 +12,13 @@
         <div class="header">
           <img alt="Logo" src="./src/assets/logo.png" />
           <h1>Solitaire</h1>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSeAddlAk8YMFda91uQYhefrFF6PNL-5IZQnfoycOrb6vX9Xzg/viewform">Customer Survey</a>
+          <div class="info-group">
+            <a href="#" data-custom-open="modal-1">Rules</a>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSeAddlAk8YMFda91uQYhefrFF6PNL-5IZQnfoycOrb6vX9Xzg/viewform"
+              >Survey</a
+            >
+          </div>
         </div>
       </div>
     </header>
@@ -20,15 +26,15 @@
       <div class="row">
         <nav>
           <span>Score: </span>
-          <span class="score">0</span>        
+          <span class="score">0</span>
           <div class="control-group">
             <label for="switch">Vegas Mode</label>
             <label class="switch">
-              <input type="checkbox" id="vegasSwitch"/>
+              <input type="checkbox" id="vegasSwitch" />
               <span class="slider round"></span>
             </label>
             <button class="deal" id="dealbtn">Deal</button>
-          </div>        
+          </div>
         </nav>
       </div>
       <div class="card-table">
@@ -58,7 +64,87 @@
           </div>
         </div>
       </div>
+      <div
+        class="modal micromodal-slide hidden"
+        id="modal-1"
+        aria-hidden="true"
+      >
+        <div class="modal__overlay" tabindex="-1" data-custom-close="modal-1">
+          <div
+            class="modal__container"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-1-title"
+          >
+            <header class="modal__header">
+              <h2 class="modal__title" id="modal-1-title">How to Play</h2>
+              <button
+                class="modal__close"
+                aria-label="Close modal"
+                data-custom-close="modal-1"
+              ></button>
+            </header>
+            <main class="modal__content" id="modal-1-content">
+              <ul>
+                <li>
+                  When moved to Tableau, the faced up cards can only be transferred in
+                  descending order (King to Ace) and in alternating color.
+                </li>
+                <li>
+                  Foundations can only be stacked by matching suits and in
+                  ascending order.
+                </li>
+                <li>
+                  An empty spot in the Tableau may be filled with a king only.
+                </li>
+                <li>
+                  Clicking/tapping a card will auto-stack it if an appropriate
+                  spot is available.
+                </li>
+                <li>
+                  If the player cannot move any cards within the Tableau, the
+                  player can select cards from the top of the Stock pile to form
+                  the Talon.
+                </li>
+                <li>
+                  When the Stock runs out, the Talon is reshuffled to form a new
+                  Stock. When Vegas mode is enabled, the player is able to go
+                  through the Stock only once.
+                </li>
+                <li>
+                  When playing in Vegas mode, the player will have to “buy” the
+                  deck, represented by a -52 score at the beginning of every
+                  game.
+                </li>
+                <li>
+                  To win the game, the player has to build up the
+                  Foundations stacks. When all cards have been transferred in
+                  ascending order (Ace to King) to the Foundations, the game is
+                  won. If no more moves can be made and the Foundations is
+                  incomplete, the game is lost.
+                </li>
+              </ul>
+            </main>
+            <footer class="modal__footer">
+              <button data-custom-close="modal-1">Close</button>
+            </footer>
+          </div>
+        </div>
+      </div>
     </main>
     <script src="./index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/micromodal@0.4.6/dist/micromodal.min.js"></script>
+    <script>
+      MicroModal.init({
+        openTrigger: "data-custom-open",
+        closeTrigger: "data-custom-close",
+        openClass: "is-open",
+        disableScroll: true,
+        disableFocus: false,
+        awaitOpenAnimation: true,
+        awaitCloseAnimation: true,
+        debugMode: true,
+      });
+    </script>
   </body>
 </html>
