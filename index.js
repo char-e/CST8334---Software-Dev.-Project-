@@ -189,6 +189,7 @@ function addToScore(eventType) {
 function win() {
   addToScore(SCOREGAMEOVER);
   clearInterval(scoreTimer);
+  alert("You win!");
 }
 
 function checkWin() {
@@ -246,6 +247,7 @@ function attachEventListeners() {
 attachEventListenersToStock();
 
 function getCardFromStock(pile, event){
+  clearSelected();
   let stockPile =  document.querySelector('.stock-pile');
   let talonPile =  document.querySelector('.talon-pile');
   let stockPileCard =stockPile.lastChild;
@@ -263,16 +265,13 @@ function getCardFromStock(pile, event){
       addToScore(STOCK);
     }
     //make a button to get every card from talon pile to stack 
-    while (talonPile.hasChildNodes()) { 
-      talonPile.lastElementChild.classList.remove("selected");
-      isSelected = false;
+    while (talonPile.hasChildNodes()) {
       talonPile.lastChild.classList.remove("up");
       stockPile.appendChild(talonPile.removeChild(talonPile.lastChild));
     }
   } else {
     clearInterval(scoreTimer);
-    // Lose/play again message
-    // Redeal
+    alert("Game over!");
   }
 } 
 
@@ -360,39 +359,40 @@ function magicMove(pile, event,isDoubleClicked){
       let cardDest = tableauPileCollection[i].lastChild;
       if (validTableauMove(cardSelected, cardDest)) {
         moveCardToTableau(tableauPileCollection[i], cardSelected); //(destPile, selectedCArd)
+        break; // Stop searching, card has been moved
       }
-
     }
+    clearSelected();
   }
   else { // Not a double click, run regular click logic
-    moveCardToTableau(pile, event)
+    moveCardToTableau(pile, event);
   }
 }
 
-function isTableauSuitMatch(cardSelected, cardDestination) {
+// function isTableauSuitMatch(cardSelected, cardDestination) {
 
-  if (
-    (cardSelected.getAttribute("data-suit") == suits[0] ||
-      cardSelected.getAttribute("data-suit") == suits[1]) &&
-    (cardDestination.getAttribute("data-suit") == suits[0] ||
-      cardDestination.getAttribute("data-suit") == suits[1])
-  ) {
-    console.log("Bad suit: both cards red");
-    return false;
-  }
-  // if both are black, return false
-  if (
-    (cardSelected.getAttribute("data-suit") == suits[2] ||
-      cardSelected.getAttribute("data-suit") == suits[3]) &&
-    (cardDestination.getAttribute("data-suit") == suits[2] ||
-      cardDestination.getAttribute("data-suit") == suits[3])
-  ) {
-    console.log("Bad suit: both cards black");
-    return false;
-  }
+//   if (
+//     (cardSelected.getAttribute("data-suit") == suits[0] ||
+//       cardSelected.getAttribute("data-suit") == suits[1]) &&
+//     (cardDestination.getAttribute("data-suit") == suits[0] ||
+//       cardDestination.getAttribute("data-suit") == suits[1])
+//   ) {
+//     console.log("Bad suit: both cards red");
+//     return false;
+//   }
+//   // if both are black, return false
+//   if (
+//     (cardSelected.getAttribute("data-suit") == suits[2] ||
+//       cardSelected.getAttribute("data-suit") == suits[3]) &&
+//     (cardDestination.getAttribute("data-suit") == suits[2] ||
+//       cardDestination.getAttribute("data-suit") == suits[3])
+//   ) {
+//     console.log("Bad suit: both cards black");
+//     return false;
+//   }
 
-  return true;
-}
+//   return true;
+// }
 
 
 function moveTableauToFoundation(cardSelected, destPile){
@@ -412,6 +412,9 @@ function moveTableauToFoundation(cardSelected, destPile){
     parentPile.lastChild.classList.add("up");
   }
   destPile.appendChild(cardSelected);
+
+  clearSelected();
+
   if(checkWin()) {
     win();
   }
@@ -459,7 +462,7 @@ function moveCardToTableau(pile, event) { //tableau pile
       validMove = validFoundationMove(cardsSelected[0], cardDestination);
     } else {
       // invalid move
-      console.log('invalid move')
+      // console.log('invalid move')
       // TODO: possible error feedback (red flash/sound, etc)
     }
 
@@ -492,17 +495,7 @@ function moveCardToTableau(pile, event) { //tableau pile
         pile.appendChild(cardsSelected[i]);
       }
     }
-
-    // deselect card
-    for (i = 0; i < cardsSelected.length; i++) {
-      cardsSelected[i].classList.remove("selected");
-    }
-    clickCount = 0;
-    isSelected = false;
-
-    if(checkWin()) {
-      win();
-    }
+    clearSelected();
   }
 }
 
@@ -576,6 +569,16 @@ function findSiblings(node) {
     node = node.nextElementSibling || node.nextSibling;
   }
   return siblings;
+}
+
+// Deselects all cards and resets double-click timer
+function clearSelected() {
+  allCards = document.querySelectorAll(`.card`);
+  for (i = 0; i < allCards.length; i++) {
+    allCards[i].classList.remove("selected");
+  }
+  clickCount = 0;
+  isSelected = false;
 }
 
 window.addEventListener("DOMContentLoaded", (event) => {

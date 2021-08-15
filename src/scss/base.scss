@@ -1,6 +1,7 @@
 body {
   min-width: 320px;
-  background-color: darkgreen;
+  background-image: url(/src/assets/background.jpg);
+  background-position: center;
   margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #fff;
@@ -13,7 +14,7 @@ nav {
   margin-top: 20px;
 }
 
-.control-group {
+.control-group, .info-group{
   display: flex;
   align-items: center;
   margin-left: auto;
@@ -49,8 +50,8 @@ nav {
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 .slider:before {
@@ -61,8 +62,8 @@ nav {
   left: 4px;
   bottom: 4px;
   background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 input:checked + .slider {
@@ -133,6 +134,7 @@ input:checked + .slider:before {
 
   a {
     align-self: center;
+    padding: 5px;
     margin-left: auto;
     color: #fff;
 
